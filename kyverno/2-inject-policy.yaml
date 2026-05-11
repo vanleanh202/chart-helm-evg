@@ -1,0 +1,31 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: inject-gitlab-registry-secret-global
+spec:
+  background: true
+  rules:
+  - name: inject-secret-to-all-pods
+    match:
+      any:
+      - resources:
+          kinds:
+          - Pod
+    exclude:
+      any:
+      - resources:
+          namespaces:
+          - kube-system
+          - kube-public
+          - kube-node-lease
+          - kyverno
+          - default
+          - longhorn-system
+          - cert-manager
+          - monitoring
+
+    mutate:
+      patchStrategicMerge:
+        spec:
+          imagePullSecrets:
+          - name: gitlab-registry-secret

@@ -1,0 +1,14 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: ch1
+  name: ch1-admin-role
+rules:
+# 1. Quyền quản lý ứng dụng, Storage (PVC) và ServiceAccount cho Helm
+- apiGroups: ["", "apps", "batch", "extensions"]
+  resources: ["pods", "pods/log", "pods/exec", "deployments", "replicasets", "statefulsets", "daemonsets", "services", "configmaps", "secrets", "jobs", "cronjobs", "persistentvolumeclaims", "serviceaccounts"]
+  verbs: ["*"] 
+# 2. Nhóm Networking: Cần thiết để cấu hình Ingress (tên miền) cho Nginx
+- apiGroups: ["networking.k8s.io"]
+  resources: ["ingresses", "networkpolicies"]
+  verbs: ["*"]

@@ -1,0 +1,13 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: ch1-admin-binding
+  namespace: ch1
+subjects:
+- kind: ServiceAccount # Trỏ vào ServiceAccount vừa tạo
+  name: ch1-user
+  namespace: ch1
+roleRef:
+  kind: Role
+  name: ch1-admin-role
+  apiGroup: rbac.authorization.k8s.io

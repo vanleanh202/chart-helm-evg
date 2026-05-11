@@ -1,0 +1,12 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: support-ai
+  name: pod-log-viewer
+rules:
+- apiGroups: [""] # Nhóm API core
+  resources: ["pods"]
+  verbs: ["get", "list", "watch"] # list và watch giúp lệnh 'kubectl get pods' hoạt động trơn tru
+- apiGroups: [""]
+  resources: ["pods/log"]
+  verbs: ["get"] # Quyền để chạy 'kubectl logs'
